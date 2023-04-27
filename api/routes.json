@@ -1,4 +1,4 @@
 {
-  "/tasks": "/api/v1/tasks",
-  "/operations": "api/v1/operations"
+    "/tasks": "/api/v1/tasks",
+    "/operations": "api/v1/operations"
 }
