@@ -1,13 +1,27 @@
 import { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-interface Task {
+interface TaskStatus {
+    status: 'open' | 'closed';
+}
+
+interface Task extends TaskStatus {
     name: string;
     description: string;
     addedDate: Date;
-    status: 'open' | 'closed';
     id: number;
 }
+
+type TaskApiArgs = {
+    endpoint: string;
+    data: Omit<Task, 'id'> | TaskStatus;
+    method: 'post' | 'patch' | 'put';
+};
+
+type TaskApiArgsWithoutData = {
+    method: 'get' | 'delete';
+    endpoint: string;
+};
 
 function App() {
     const [name, setName] = useState('');
@@ -26,14 +40,26 @@ function App() {
     }
 
     async function sendTaskApi(
-        endpoint: string,
-        data: Omit<Task, 'id'>
+        config: TaskApiArgs | TaskApiArgsWithoutData
     ): Promise<Task> {
+        const { method, endpoint } = config;
+        const requestConfig: {
+            method: string;
+            url: string;
+            data?: Task | TaskStatus;
+        } = {
+            method,
+            url: `http://localhost:3000/api/v1/${endpoint}`,
+        };
+
+        if (!['get', 'delete'].includes(method)) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            requestConfig.data = config.data;
+        }
+
         try {
-            const response = await axios.post(
-                `http://localhost:3000/api/v1/${endpoint}`,
-                data
-            );
+            const response = await axios(requestConfig);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -42,15 +68,45 @@ function App() {
     }
 
     async function handleSubmit() {
-        const data = await sendTaskApi('tasks', {
-            addedDate: new Date(),
-            description,
-            name,
-            status: 'open',
+        const data = await sendTaskApi({
+            data: {
+                addedDate: new Date(),
+                description,
+                name,
+                status: 'open',
+            },
+            endpoint: 'tasks',
+            method: 'post',
         });
         setTasks([...tasks, data]);
         setName('');
         setDescription('');
+    }
+
+    function handleFinishTask(task: Task) {
+        return async function () {
+            await sendTaskApi({
+                endpoint: `tasks/${task.id}`,
+                data: {
+                    status: 'closed',
+                },
+                method: 'patch',
+            });
+
+            task.status = 'closed';
+            setTasks([...tasks]);
+        };
+    }
+
+    function handleDeleteTask(id: number) {
+        return async function () {
+            await sendTaskApi({
+                endpoint: `tasks/${id}`,
+                method: 'delete',
+            });
+
+            setTasks(tasks.filter(task => task.id !== id));
+        };
     }
 
     return (
@@ -81,8 +137,17 @@ function App() {
                     <div key={task.id}>
                         <b>{task.name} </b>
                         <span>{task.description} </span>
-                        <button>Add operation</button>
-                        <button>Finish</button>
+                        {task.status === 'open' && (
+                            <>
+                                <button>Add operation</button>
+                                <button onClick={handleFinishTask(task)}>
+                                    Finish
+                                </button>
+                            </>
+                        )}
+                        <button onClick={handleDeleteTask(task.id)}>
+                            Delete
+                        </button>
                     </div>
                 ))}
             </div>
