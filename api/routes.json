@@ -1,5 +1,6 @@
 {
   "/api/v1/tasks": "/tasks",
   "/api/v1/tasks/:id": "/tasks/:id",
-  "api/v1/operations": "/operations"
+  "/api/v1/operations": "/operations",
+  "/api/v1/operations/:id": "/operations/:id"
 }

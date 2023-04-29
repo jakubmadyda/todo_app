@@ -41,7 +41,7 @@ export async function callOperationsApi(
     const requestConfig: {
         method: string;
         url: string;
-        data?: Operation;
+        data?: Operation | OperationTime;
         id?: number;
     } = {
         method,
@@ -81,11 +81,14 @@ export async function getOperationsApi(): Promise<Operation[]> {
     return response.data;
 }
 
-export interface Operation {
+export interface OperationTime {
+    spentTime: number;
+}
+
+export interface Operation extends OperationTime {
     id: number;
     description: string;
     addedDate: Date;
-    spentTime: number;
     taskId: number;
 }
 
@@ -116,5 +119,5 @@ type OperationApiArgs = CallApiArgs & {
 };
 
 type OperationApiArgsData = CallApiArgsData & {
-    data: Omit<Operation, 'id'>;
+    data: Omit<Operation, 'id'> | OperationTime;
 };

@@ -1,36 +1,48 @@
 {
   "tasks": [
     {
-      "addedDate": "2023-04-29T08:57:23.172Z",
+      "addedDate": "2023-04-29T11:26:56.977Z",
       "description": "123",
       "name": "umyc okna",
-      "status": "open",
+      "status": "closed",
       "id": 1
     },
     {
-      "addedDate": "2023-04-29T08:58:20.435Z",
+      "addedDate": "2023-04-29T11:27:16.597Z",
       "description": "321",
-      "name": "test",
-      "status": "open",
+      "name": "posprzatac",
+      "status": "closed",
       "id": 2
     }
   ],
   "operations": [
     {
-      "description": "salon",
-      "addedDate": "2023-04-29T08:57:50.937Z",
-      "spentTime": 0,
+      "description": "operacja1",
+      "addedDate": "2023-04-29T11:27:06.405Z",
+      "spentTime": 23,
       "taskId": 1,
-      "apiId": "v1",
       "id": 1
     },
     {
-      "description": "kuchnia",
-      "addedDate": "2023-04-29T09:01:39.859Z",
-      "spentTime": 0,
-      "taskId": 1,
-      "apiId": "v1",
-      "id": 2
+      "description": "op1",
+      "addedDate": "2023-04-29T11:27:21.700Z",
+      "spentTime": 30,
+      "taskId": 2,
+      "id": 3
+    },
+    {
+      "description": "op2",
+      "addedDate": "2023-04-29T11:48:34.388Z",
+      "spentTime": 45,
+      "taskId": 2,
+      "id": 4
+    },
+    {
+      "description": "op3",
+      "addedDate": "2023-04-29T11:48:40.088Z",
+      "spentTime": 100,
+      "taskId": 2,
+      "id": 5
     }
   ]
 }
