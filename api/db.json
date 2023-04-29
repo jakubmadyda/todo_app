@@ -1,4 +1,36 @@
 {
-  "tasks": [],
-  "operations": []
+  "tasks": [
+    {
+      "addedDate": "2023-04-29T08:57:23.172Z",
+      "description": "123",
+      "name": "umyc okna",
+      "status": "open",
+      "id": 1
+    },
+    {
+      "addedDate": "2023-04-29T08:58:20.435Z",
+      "description": "321",
+      "name": "test",
+      "status": "open",
+      "id": 2
+    }
+  ],
+  "operations": [
+    {
+      "description": "salon",
+      "addedDate": "2023-04-29T08:57:50.937Z",
+      "spentTime": 0,
+      "taskId": 1,
+      "apiId": "v1",
+      "id": 1
+    },
+    {
+      "description": "kuchnia",
+      "addedDate": "2023-04-29T09:01:39.859Z",
+      "spentTime": 0,
+      "taskId": 1,
+      "apiId": "v1",
+      "id": 2
+    }
+  ]
 }

@@ -1,92 +1,67 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { OperationForm } from './components/OperationForm';
+import {
+    callTasksApi,
+    getOperationsApi,
+    getTaskApi,
+    Operation,
+} from './helpers/Api';
 
-interface TaskStatus {
+export interface TaskStatus {
     status: 'open' | 'closed';
 }
 
-interface Task extends TaskStatus {
+export interface Task extends TaskStatus {
     name: string;
     description: string;
     addedDate: Date;
     id: number;
+    operations: Operation[];
 }
-
-type TaskApiArgs = {
-    endpoint: string;
-    data: Omit<Task, 'id'> | TaskStatus;
-    method: 'post' | 'patch' | 'put';
-};
-
-type TaskApiArgsWithoutData = {
-    method: 'get' | 'delete';
-    endpoint: string;
-};
 
 function App() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [activeTaskId, setActiveTaskId] = useState<null | number>(null);
 
     useEffect(() => {
-        getTasksApi('tasks').then(setTasks);
+        const responses = Promise.all([getTaskApi(), getOperationsApi()]);
+
+        responses.then(data => {
+            const [tasks, operations] = data;
+
+            setTasks(
+                tasks.map(task => ({
+                    ...task,
+                    operations: operations.filter(
+                        operation => operation.taskId === task.id
+                    ),
+                }))
+            );
+        });
     }, []);
 
-    async function getTasksApi(endpoint: string): Promise<Task[]> {
-        const response = await axios.get<Task[]>(
-            `http://localhost:3000/${endpoint}`
-        );
-        return response.data;
-    }
-
-    async function sendTaskApi(
-        config: TaskApiArgs | TaskApiArgsWithoutData
-    ): Promise<Task> {
-        const { method, endpoint } = config;
-        const requestConfig: {
-            method: string;
-            url: string;
-            data?: Task | TaskStatus;
-        } = {
-            method,
-            url: `http://localhost:3000/api/v1/${endpoint}`,
-        };
-
-        if (!['get', 'delete'].includes(method)) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            requestConfig.data = config.data;
-        }
-
-        try {
-            const response = await axios(requestConfig);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
     async function handleSubmit() {
-        const data = await sendTaskApi({
+        const data = await callTasksApi({
             data: {
                 addedDate: new Date(),
                 description,
                 name,
                 status: 'open',
             },
-            endpoint: 'tasks',
             method: 'post',
         });
-        setTasks([...tasks, data]);
+
+        setTasks([...tasks, { ...data, operations: [] }]);
         setName('');
         setDescription('');
     }
 
     function handleFinishTask(task: Task) {
         return async function () {
-            await sendTaskApi({
-                endpoint: `tasks/${task.id}`,
+            await callTasksApi({
+                id: task.id,
                 data: {
                     status: 'closed',
                 },
@@ -100,8 +75,8 @@ function App() {
 
     function handleDeleteTask(id: number) {
         return async function () {
-            await sendTaskApi({
-                endpoint: `tasks/${id}`,
+            await callTasksApi({
+                id,
                 method: 'delete',
             });
 
@@ -139,7 +114,11 @@ function App() {
                         <span>{task.description} </span>
                         {task.status === 'open' && (
                             <>
-                                <button>Add operation</button>
+                                <button
+                                    onClick={() => setActiveTaskId(task.id)}
+                                >
+                                    Add operation
+                                </button>
                                 <button onClick={handleFinishTask(task)}>
                                     Finish
                                 </button>
@@ -148,6 +127,25 @@ function App() {
                         <button onClick={handleDeleteTask(task.id)}>
                             Delete
                         </button>
+                        {task.id === activeTaskId && (
+                            <OperationForm
+                                taskId={task.id}
+                                onCancel={setActiveTaskId}
+                                setTasks={setTasks}
+                            />
+                        )}
+                        <div>
+                            <hr />
+                            {task.operations.map(operation => (
+                                <div key={operation.id}>
+                                    {operation.description}{' '}
+                                    {operation.spentTime}
+                                    <button>Add spent time</button>
+                                    <button>Delete</button>
+                                </div>
+                            ))}
+                            <br />
+                        </div>
                     </div>
                 ))}
             </div>
