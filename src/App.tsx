@@ -8,6 +8,7 @@ import {
     Operation,
 } from './helpers/Api';
 import { SpentTimeForm } from './components/SpentTimeForm';
+import { Container, Stack, TextField, Button } from '@mui/material';
 
 export interface TaskStatus {
     status: 'open' | 'closed';
@@ -124,27 +125,35 @@ function App() {
     }
 
     return (
-        <>
+        <Container maxWidth="md">
             <form
                 onSubmit={async e => {
                     e.preventDefault();
                     await handleSubmit();
                 }}
+                style={{ marginBottom: 40 }}
             >
-                <label htmlFor="task">Task</label>
-                <input
-                    id="task"
-                    type="text"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                />
-                <label htmlFor="description">Description</label>
-                <textarea
-                    id="description"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                ></textarea>
-                <button type="submit">Add</button>
+                <Stack spacing={2} direction="column">
+                    <TextField
+                        label="Title"
+                        variant="outlined"
+                        id="task"
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+
+                    <TextField
+                        label="Description"
+                        variant="outlined"
+                        id="description"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <Button variant="contained" type="submit">
+                        Add
+                    </Button>
+                </Stack>
             </form>
             <div>
                 {tasks.map(task => (
@@ -215,7 +224,7 @@ function App() {
                     </div>
                 ))}
             </div>
-        </>
+        </Container>
     );
 }
 
