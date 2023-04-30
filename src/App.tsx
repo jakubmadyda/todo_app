@@ -19,10 +19,14 @@ import {
     Box,
     CardActionArea,
     IconButton,
+    List,
+    ListItem,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import AddIcon from '@mui/icons-material/Add';
+import MoreTimeIcon from '@mui/icons-material/MoreTime';
+import DoneIcon from '@mui/icons-material/Done';
 
 export interface TaskStatus {
     status: 'open' | 'closed';
@@ -143,12 +147,23 @@ function App() {
 
     return (
         <Container maxWidth="md">
+            <Typography
+                variant="h4"
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 2,
+                }}
+            >
+                Todos React App <DoneIcon fontSize="large" />
+            </Typography>
             <form
                 onSubmit={async e => {
                     e.preventDefault();
                     await handleSubmit();
                 }}
-                style={{ marginBottom: 40 }}
+                style={{ marginBottom: 20 }}
             >
                 <Stack spacing={2} direction="column">
                     <TextField
@@ -200,7 +215,7 @@ function App() {
                                                     task.operations
                                                 )}
                                         </Typography>
-                                        <Typography variant="subtitle1">
+                                        <Typography variant="subtitle2">
                                             {task.description}
                                         </Typography>
                                     </Box>
@@ -231,52 +246,99 @@ function App() {
                                     </Box>
                                 </Box>
                             </CardContent>
-                            <CardContent>
-                                {task.id === activeTaskId && (
-                                    <OperationForm
-                                        taskId={task.id}
-                                        onCancel={setActiveTaskId}
-                                        setTasks={setTasks}
-                                    />
-                                )}
-                                {task.operations.map(operation => (
-                                    <div key={operation.id}>
-                                        {operation.description}{' '}
-                                        {~~(operation.spentTime / 60)}h{' '}
-                                        {operation.spentTime % 60}m
-                                        {operation.id === activeOperationId ? (
-                                            <SpentTimeForm
-                                                operation={operation}
-                                                onCancel={setActiveOperationId}
+                            <CardContent sx={{ padding: '0' }}>
+                                <List sx={{ padding: '0' }}>
+                                    {task.id === activeTaskId && (
+                                        <ListItem
+                                            sx={{
+                                                border: '1px solid whitesmoke',
+                                            }}
+                                        >
+                                            <OperationForm
+                                                taskId={task.id}
+                                                onCancel={setActiveTaskId}
                                                 setTasks={setTasks}
                                             />
-                                        ) : (
-                                            task.status === 'open' && (
-                                                <button
-                                                    onClick={() =>
-                                                        setActiveOperationId(
-                                                            operation.id
-                                                        )
-                                                    }
-                                                >
-                                                    Add spent time
-                                                </button>
-                                            )
-                                        )}
-                                        {task.status === 'open' && (
-                                            <button
-                                                onClick={handleDeleteOperation(
-                                                    operation
-                                                )}
+                                        </ListItem>
+                                    )}
+                                    {task.operations.map(operation => (
+                                        <ListItem
+                                            sx={{
+                                                border: '1px solid whitesmoke',
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                flexWrap: 'no-wrap',
+                                            }}
+                                            key={operation.id}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 1,
+                                                }}
                                             >
-                                                Delete
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
+                                                <Typography variant="body1">
+                                                    {operation.description}
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    {operation.spentTime > 60 &&
+                                                        ~~(
+                                                            operation.spentTime /
+                                                            60
+                                                        ) + 'h'}{' '}
+                                                    {operation.spentTime > 0 &&
+                                                        (operation.spentTime %
+                                                            60) +
+                                                            'm'}
+                                                </Typography>
+                                            </Box>
+                                            <Box>
+                                                {operation.id ===
+                                                activeOperationId ? (
+                                                    <SpentTimeForm
+                                                        operation={operation}
+                                                        onCancel={
+                                                            setActiveOperationId
+                                                        }
+                                                        setTasks={setTasks}
+                                                    />
+                                                ) : (
+                                                    task.status === 'open' && (
+                                                        <IconButton
+                                                            size="small"
+                                                            sx={{
+                                                                color: 'green',
+                                                            }}
+                                                            onClick={() =>
+                                                                setActiveOperationId(
+                                                                    operation.id
+                                                                )
+                                                            }
+                                                        >
+                                                            <MoreTimeIcon fontSize="inherit" />
+                                                        </IconButton>
+                                                    )
+                                                )}
+                                                {task.status === 'open' && (
+                                                    <IconButton
+                                                        size="small"
+                                                        sx={{
+                                                            color: 'tomato',
+                                                        }}
+                                                        onClick={handleDeleteOperation(
+                                                            operation
+                                                        )}
+                                                    >
+                                                        <DeleteIcon fontSize="inherit" />
+                                                    </IconButton>
+                                                )}
+                                            </Box>
+                                        </ListItem>
+                                    ))}
+                                </List>
                             </CardContent>
                         </CardActionArea>
-                        <div></div>
                     </Card>
                 ))}
             </Stack>
