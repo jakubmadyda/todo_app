@@ -1,54 +1,61 @@
 {
   "tasks": [
     {
-      "addedDate": "2023-04-30T13:43:39.812Z",
+      "addedDate": "2023-04-30T14:26:06.762Z",
       "description": "mycie okien w całym domu",
       "name": "umyc okna",
       "status": "open",
       "id": 1
     },
     {
-      "addedDate": "2023-04-30T13:44:31.506Z",
-      "description": "",
-      "name": "odkurzanie",
+      "addedDate": "2023-04-30T14:26:51.678Z",
+      "description": "caly dom",
+      "name": "odkurzyć",
       "status": "open",
       "id": 2
+    },
+    {
+      "addedDate": "2023-04-30T14:27:07.008Z",
+      "description": "",
+      "name": "posprzatac",
+      "status": "closed",
+      "id": 3
     }
   ],
   "operations": [
     {
-      "description": "salon",
-      "addedDate": "2023-04-30T13:43:44.615Z",
-      "spentTime": 30,
+      "description": "kuchnia",
+      "addedDate": "2023-04-30T14:26:23.047Z",
+      "spentTime": 123,
       "taskId": 1,
       "id": 1
     },
     {
-      "description": "kuchnia",
-      "addedDate": "2023-04-30T13:43:51.914Z",
-      "spentTime": 30,
+      "description": "salon",
+      "addedDate": "2023-04-30T14:26:26.713Z",
+      "spentTime": 25,
       "taskId": 1,
       "id": 2
     },
     {
       "description": "sypialnia",
-      "addedDate": "2023-04-30T13:44:00.072Z",
-      "spentTime": 30,
+      "addedDate": "2023-04-30T14:26:32.924Z",
+      "spentTime": 120,
       "taskId": 1,
       "id": 3
     },
     {
-      "description": "kuchnia",
-      "addedDate": "2023-04-30T13:44:44.398Z",
-      "spentTime": 0,
-      "taskId": 2,
+      "description": "łazienka",
+      "addedDate": "2023-04-30T14:27:15.615Z",
+      "spentTime": 500,
+      "taskId": 3,
       "id": 4
     },
     {
-      "description": "łazienka",
-      "addedDate": "2023-04-30T13:45:00.881Z",
-      "spentTime": 0,
-      "taskId": 2,
+      "description": "test",
+      "addedDate": "2023-04-30T14:27:19.436Z",
+      "spentTime": 2137,
+      "taskId": 3,
       "id": 5
     }
   ]

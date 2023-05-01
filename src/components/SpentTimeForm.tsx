@@ -1,6 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { callOperationsApi, Operation } from '../helpers/Api';
-import { Task } from '../App';
+import { callOperationsApi, Operation, Task } from '../helpers/Api';
 
 interface AddSpentTimeProps {
     operation: Operation;
@@ -8,11 +7,7 @@ interface AddSpentTimeProps {
     onCancel: Dispatch<number | null>;
 }
 
-export function SpentTimeForm({
-    operation,
-    setTasks,
-    onCancel,
-}: AddSpentTimeProps) {
+function SpentTimeForm({ operation, setTasks, onCancel }: AddSpentTimeProps) {
     const [value, setValue] = useState(0);
 
     async function handleAddSpentTime(e: FormEvent<HTMLFormElement>) {
@@ -43,3 +38,5 @@ export function SpentTimeForm({
         </form>
     );
 }
+
+export default SpentTimeForm;

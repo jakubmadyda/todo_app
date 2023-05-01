@@ -1,6 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { callOperationsApi, Operation } from '../helpers/Api';
-import { Task } from '../App';
+import { callOperationsApi, Operation, Task } from '../helpers/Api';
 import { Box, Button, TextField } from '@mui/material';
 
 interface OperationFormProps {
@@ -9,11 +8,7 @@ interface OperationFormProps {
     setTasks: Dispatch<SetStateAction<Task[]>>;
 }
 
-export function OperationForm({
-    onCancel,
-    taskId,
-    setTasks,
-}: OperationFormProps) {
+function OperationForm({ onCancel, taskId, setTasks }: OperationFormProps) {
     const [value, setValue] = useState('');
 
     async function handleAddOperation(e: FormEvent<HTMLFormElement>) {
@@ -42,7 +37,7 @@ export function OperationForm({
 
     return (
         <form onSubmit={handleAddOperation}>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', padding: 1 }}>
                 <TextField
                     fullWidth
                     value={value}
@@ -65,3 +60,5 @@ export function OperationForm({
         </form>
     );
 }
+
+export default OperationForm;
