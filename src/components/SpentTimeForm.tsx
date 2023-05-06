@@ -1,5 +1,8 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { callOperationsApi, Operation, Task } from '../helpers/Api';
+import { Box, IconButton, TextField } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 interface AddSpentTimeProps {
     operation: Operation;
@@ -26,15 +29,25 @@ function SpentTimeForm({ operation, setTasks, onCancel }: AddSpentTimeProps) {
 
     return (
         <form onSubmit={handleAddSpentTime}>
-            <input
-                type="number"
-                value={value}
-                onChange={e => setValue(+e.target.value)}
-            />
-            <button type="submit">Add time</button>
-            <button type="button" onClick={() => onCancel(null)}>
-                Cancel
-            </button>
+            <Box>
+                <TextField
+                    size="small"
+                    type="number"
+                    value={value}
+                    onChange={e => setValue(+e.target.value)}
+                />
+                <IconButton size="small" color="success" type="submit">
+                    <AddCircleOutlineIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton
+                    size="small"
+                    color="error"
+                    type="button"
+                    onClick={() => onCancel(null)}
+                >
+                    <HighlightOffIcon fontSize="inherit" />
+                </IconButton>
+            </Box>
         </form>
     );
 }

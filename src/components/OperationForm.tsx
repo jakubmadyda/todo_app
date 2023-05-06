@@ -41,6 +41,7 @@ function OperationForm({ onCancel, taskId, setTasks }: OperationFormProps) {
                 <TextField
                     fullWidth
                     value={value}
+                    label="subtask description"
                     type="text"
                     size="small"
                     sx={{ fontSize: '1rem' }}

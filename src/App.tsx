@@ -10,7 +10,7 @@ import { Title } from './components/Title';
 import TaskForm from './components/TaskForm';
 import TaskCard from './components/TaskCard';
 
-function App() {
+function App(): JSX.Element {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [tasks, setTasks] = useState<Task[]>([]);

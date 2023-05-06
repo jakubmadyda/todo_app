@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 
-export function Title() {
+export function Title(): JSX.Element {
     return (
         <Typography
             variant="h4"

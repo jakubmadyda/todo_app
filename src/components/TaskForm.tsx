@@ -1,11 +1,12 @@
 import { Button, Card, CardContent, Stack, TextField } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface TaskFormProps {
     setName: Dispatch<SetStateAction<string>>;
     name: string;
     description: string;
     setDescription: Dispatch<SetStateAction<string>>;
+    handleSubmit: () => Promise<void>;
 }
 
 function TaskForm({
@@ -15,13 +16,36 @@ function TaskForm({
     setDescription,
     handleSubmit,
 }: TaskFormProps) {
+    const [errors, setErrors] = useState<string[]>([]);
+
+    function validateForm() {
+        let formValid = true;
+        const newErrors = [];
+
+        if (name === '') {
+            formValid = false;
+            newErrors.push('name');
+        }
+
+        if (description === '') {
+            formValid = false;
+            newErrors.push('description');
+        }
+
+        setErrors(newErrors);
+        console.log(errors);
+        return formValid;
+    }
+
     return (
         <Card sx={{ marginBottom: 3 }}>
             <CardContent>
                 <form
                     onSubmit={async e => {
                         e.preventDefault();
-                        await handleSubmit();
+                        if (validateForm()) {
+                            await handleSubmit();
+                        }
                     }}
                 >
                     <Stack spacing={2} direction="column">
@@ -32,6 +56,10 @@ function TaskForm({
                             type="text"
                             value={name}
                             onChange={e => setName(e.target.value)}
+                            error={errors.includes('name')}
+                            helperText={
+                                errors.includes('name') && 'Name is required'
+                            }
                         />
 
                         <TextField
@@ -40,6 +68,11 @@ function TaskForm({
                             id="description"
                             value={description}
                             onChange={e => setDescription(e.target.value)}
+                            error={errors.includes('description')}
+                            helperText={
+                                errors.includes('description') &&
+                                'Description is required'
+                            }
                         />
                         <Button variant="contained" type="submit">
                             Add

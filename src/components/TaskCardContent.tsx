@@ -1,6 +1,20 @@
 import OperationForm from './OperationForm';
 import { CardContent, List } from '@mui/material';
+import { Task, Operation } from '../helpers/Api';
+import { Dispatch, SetStateAction } from 'react';
 import SingleOperation from './SingleOperation';
+
+interface TaskCardContentProps {
+    task: Task;
+    setTasks: Dispatch<SetStateAction<Task[]>>;
+    activeTaskId: null | number;
+    setActiveTaskId: Dispatch<SetStateAction<null | number>>;
+    activeOperationId: null | number;
+    setActiveOperationId: Dispatch<SetStateAction<null | number>>;
+    handleDeleteOperation: (
+        operationToDelete: Operation
+    ) => () => Promise<void>;
+}
 
 function TaskCardContent({
     task,
@@ -10,7 +24,7 @@ function TaskCardContent({
     activeOperationId,
     setActiveOperationId,
     handleDeleteOperation,
-}) {
+}: TaskCardContentProps): JSX.Element {
     return (
         <CardContent sx={{ padding: '0' }}>
             <List sx={{ padding: '0' }}>

@@ -1,5 +1,5 @@
 import { Card, CardActionArea } from '@mui/material';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
     callOperationsApi,
     callTasksApi,
@@ -9,7 +9,13 @@ import {
 import TaskCardTitle from './TaskCardTitle';
 import TaskCardContent from './TaskCardContent';
 
-function TaskCard({ task, setTasks, tasks }) {
+interface TaskCardProps {
+    task: Task;
+    setTasks: Dispatch<SetStateAction<Task[]>>;
+    tasks: Task[];
+}
+
+function TaskCard({ task, setTasks, tasks }: TaskCardProps): JSX.Element {
     const [activeTaskId, setActiveTaskId] = useState<null | number>(null);
     const [activeOperationId, setActiveOperationId] = useState<null | number>(
         null
@@ -84,7 +90,6 @@ function TaskCard({ task, setTasks, tasks }) {
                 <TaskCardTitle
                     task={task}
                     calculateTotalTime={calculateTotalTime}
-                    activeOperationId={activeOperationId}
                     setActiveTaskId={setActiveTaskId}
                     handleFinishTask={handleFinishTask}
                     handleDeleteTask={handleDeleteTask}

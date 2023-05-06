@@ -2,6 +2,16 @@ import { Box, CardContent, IconButton, Typography } from '@mui/material';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Task } from '../helpers/Api';
+import { Dispatch, SetStateAction } from 'react';
+
+interface TaskCardTitleProps {
+    task: Task;
+    calculateTotalTime: (operations: Task['operations']) => string;
+    setActiveTaskId: Dispatch<SetStateAction<number | null>>;
+    handleFinishTask: (task: Task) => () => Promise<void>;
+    handleDeleteTask: (task: Task) => () => Promise<void>;
+}
 
 function TaskCardTitle({
     task,
@@ -9,7 +19,7 @@ function TaskCardTitle({
     setActiveTaskId,
     handleFinishTask,
     handleDeleteTask,
-}) {
+}: TaskCardTitleProps) {
     return (
         <CardContent
             sx={{
