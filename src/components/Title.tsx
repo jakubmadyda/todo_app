@@ -4,12 +4,12 @@ import DoneIcon from '@mui/icons-material/Done';
 export function Title(): JSX.Element {
     return (
         <Typography
-            variant="h4"
+            variant="h3"
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: 1,
+                marginY: 1,
             }}
         >
             Todos React App <DoneIcon fontSize="large" />
