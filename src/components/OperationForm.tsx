@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { callOperationsApi, Operation, Task } from '../helpers/Api';
 import { Box, Button, TextField } from '@mui/material';
 
@@ -10,10 +10,9 @@ interface OperationFormProps {
 
 function OperationForm({ onCancel, taskId, setTasks }: OperationFormProps) {
     const [value, setValue] = useState('');
+    const [error, setError] = useState<boolean>(false);
 
-    async function handleAddOperation(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-
+    async function handleAddOperation() {
         const operation: Operation = await callOperationsApi({
             data: {
                 description: value,
@@ -35,8 +34,26 @@ function OperationForm({ onCancel, taskId, setTasks }: OperationFormProps) {
         onCancel(null);
     }
 
+    function validateForm(): boolean {
+        let formValid = true;
+
+        if (value === '') {
+            formValid = false;
+            setError(true);
+        }
+
+        return formValid;
+    }
+
     return (
-        <form onSubmit={handleAddOperation}>
+        <form
+            onSubmit={async e => {
+                e.preventDefault();
+                if (validateForm()) {
+                    await handleAddOperation();
+                }
+            }}
+        >
             <Box sx={{ display: 'flex', padding: 1 }}>
                 <TextField
                     fullWidth
@@ -46,6 +63,7 @@ function OperationForm({ onCancel, taskId, setTasks }: OperationFormProps) {
                     size="small"
                     sx={{ fontSize: '1rem' }}
                     onChange={e => setValue(e.target.value)}
+                    error={error}
                 />
                 <Button variant="outlined" color="success" type="submit">
                     Add

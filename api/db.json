@@ -4,59 +4,73 @@
       "addedDate": "2023-04-30T14:26:51.678Z",
       "description": "caly dom",
       "name": "odkurzyć",
-      "status": "open",
+      "status": "closed",
       "id": 2
     },
     {
-      "addedDate": "2023-04-30T14:27:07.008Z",
-      "description": "",
-      "name": "posprzatac",
-      "status": "closed",
-      "id": 3
-    },
-    {
-      "addedDate": "2023-05-06T13:49:03.582Z",
-      "description": "adasds",
+      "addedDate": "2023-05-06T18:12:39.781Z",
+      "description": "mycie okien w całym domu",
       "name": "umyc okna",
       "status": "open",
-      "id": 4
+      "id": 5
+    },
+    {
+      "addedDate": "2023-05-06T18:14:49.793Z",
+      "description": " ",
+      "name": "zrobić obiad",
+      "status": "open",
+      "id": 6
     }
   ],
   "operations": [
     {
+      "description": "salon",
+      "addedDate": "2023-05-06T18:12:50.238Z",
+      "spentTime": 92,
+      "taskId": 5,
+      "id": 9
+    },
+    {
+      "description": "kuchnia",
+      "addedDate": "2023-05-06T18:12:58.114Z",
+      "spentTime": 120,
+      "taskId": 5,
+      "id": 10
+    },
+    {
+      "description": "sypialnia",
+      "addedDate": "2023-05-06T18:13:05.967Z",
+      "spentTime": 30,
+      "taskId": 5,
+      "id": 11
+    },
+    {
       "description": "łazienka",
-      "addedDate": "2023-04-30T14:27:15.615Z",
-      "spentTime": 500,
-      "taskId": 3,
-      "id": 4
-    },
-    {
-      "description": "test",
-      "addedDate": "2023-04-30T14:27:19.436Z",
-      "spentTime": 2137,
-      "taskId": 3,
-      "id": 5
-    },
-    {
-      "description": "operacja",
-      "addedDate": "2023-05-01T17:21:45.302Z",
+      "addedDate": "2023-05-06T18:13:42.680Z",
       "spentTime": 0,
       "taskId": 2,
-      "id": 6
+      "id": 12
     },
     {
-      "description": "sadasd",
-      "addedDate": "2023-05-06T13:49:11.076Z",
-      "spentTime": 6,
-      "taskId": 4,
-      "id": 7
-    },
-    {
-      "description": "sadasd",
-      "addedDate": "2023-05-06T17:06:52.829Z",
-      "spentTime": 0,
+      "description": "sypialnia",
+      "addedDate": "2023-05-06T18:13:48.709Z",
+      "spentTime": 15,
       "taskId": 2,
-      "id": 8
+      "id": 13
+    },
+    {
+      "description": "zupa",
+      "addedDate": "2023-05-06T18:16:04.488Z",
+      "spentTime": 0,
+      "taskId": 6,
+      "id": 14
+    },
+    {
+      "description": "drugie danie",
+      "addedDate": "2023-05-06T18:16:08.368Z",
+      "spentTime": 0,
+      "taskId": 6,
+      "id": 15
     }
   ]
 }

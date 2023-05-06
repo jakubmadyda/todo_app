@@ -27,11 +27,6 @@ function TaskForm({
             newErrors.push('name');
         }
 
-        if (description === '') {
-            formValid = false;
-            newErrors.push('description');
-        }
-
         setErrors(newErrors);
         console.log(errors);
         return formValid;
@@ -57,9 +52,6 @@ function TaskForm({
                             value={name}
                             onChange={e => setName(e.target.value)}
                             error={errors.includes('name')}
-                            helperText={
-                                errors.includes('name') && 'Name is required'
-                            }
                         />
 
                         <TextField
@@ -68,11 +60,6 @@ function TaskForm({
                             id="description"
                             value={description}
                             onChange={e => setDescription(e.target.value)}
-                            error={errors.includes('description')}
-                            helperText={
-                                errors.includes('description') &&
-                                'Description is required'
-                            }
                         />
                         <Button variant="contained" type="submit">
                             Add
