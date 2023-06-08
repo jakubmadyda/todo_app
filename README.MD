@@ -4,8 +4,6 @@ Simple React+TypeScript application that uses Material UI for its design.
 It uses Axios for HTTP requests and JSON Server for creating an API. 
 It includes form validations to ensure that data entered by the user is correct and can be used by the application.
 
-Hosted on [Firebase](https://todo-jm-b85fe.web.app/)
-
 ## Technologies
 
 - React
