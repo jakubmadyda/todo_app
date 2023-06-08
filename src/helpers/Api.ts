@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { Task, TaskStatus } from '../App';
 
 export async function callTasksApi(
     config: TaskApiArgs | TaskApiArgsData | CallApiArgsId
@@ -79,6 +78,18 @@ export async function getOperationsApi(): Promise<Operation[]> {
         `http://localhost:3000/api/v1/operations`
     );
     return response.data;
+}
+
+export interface TaskStatus {
+    status: 'open' | 'closed';
+}
+
+export interface Task extends TaskStatus {
+    name: string;
+    description: string;
+    addedDate: Date;
+    id: number;
+    operations: Operation[];
 }
 
 export interface OperationTime {
